@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Booking</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!--Header and Menu Section-->
+    <header class="container">
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a class="active" href="#">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!--Booking Section-->
+    <main class="main-content container">
+        <div class="booking-form">
+            <h3>Booking Flights</h3>
+            <div class="input-group">
+                <label for="">Flying From</label>
+                <input id="Flying-From" class="inp-style" type="text" name="" placeholder="Dhake, Bangladesh">
+            </div>
+            <div class="input-group">
+                <label for="">Flying To</label>
+                <input id="Flying-To" class="inp-style" type="text" name="" placeholder="New York, United States">
+            </div>
+            <div class="inputs">
+                <div class="input-group">
+                    <label" for="">Departure</label>
+                        <input id="Departure-date" class="inp-style" type="date" name="">
+                </div>
+                <div class="input-group">
+                    <label for="">Return</label>
+                    <input id="Return-date" class="inp-style" type="date" name="">
+                </div>
+            </div>
+            <div class="input-group f-class">
+                <div>
+                    <label for="">First Class ($150)</label>
+                    <input id="fristClass-ticket-count" class="inp-style inp-width" type="text" name="" value="0">
+                </div>
+                <div class="plus-minus-btn">
+                    <button id="btn-increment-fristClass" class="btn-increment">+</button>
+                    <button id="btn-decrement-fristClass" class="btn-decriment">-</button>
+                </div>
+            </div>
+
+            <div class="input-group f-class">
+                <div>
+                    <label for="">Economy ($100)</label>
+                    <input id="Economy-ticket-count" class="inp-style inp-width" type="text" name="" value="0">
+                </div>
+                <div class="plus-minus-btn">
+                    <button id="btn-increment-economy" class="btn-increment">+</button>
+                    <button id="btn-decrement-economy" class="btn-decriment">-</button>
+                </div>
+            </div>
+            <div class="calculations">
+                <div class="amount">
+                    <div class="left">
+                        <p>Subtotal</p>
+                    </div>
+                    <div class="right">
+                        <p>$ <span id="subtotal">00</span></p>
+                    </div>
+                </div>
+
+                <div class="amount">
+                    <div class="left">
+                        <p>Charge 10% VAT</p>
+                    </div>
+                    <div class="right">
+                        <p>$ <span id="vat">00</span> </p>
+                    </div>
+                </div>
+                <hr>
+                <div class="amount">
+                    <div class="left">
+                        <h4>Total</h4>
+                    </div>
+                    <div class="right">
+                        <p>$ <span id="totalPrice">00</span></p>
+                    </div>
+                </div>
+            </div>
+            <button id="bookNow-btn" class="btn-style">Book Now</button>
+        </div>
+
+        <div class="booking-content">
+            <h1>discover <br> around the world</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicingelit. Provident voluptatibus quam fuga laborumalias
+                veniam libero autem quasi maxime ullam vero nama imi dolor, architecto ab facilis eaque deserunt nobise
+                voluptatibus quam</p>
+        </div>
+        </section>
+
+        <script>
+            document.getElementById("btn-increment-fristClass").addEventListener("click", function () {
+                handelTicketChange("fristClass", true);
+            });
+            document.getElementById("btn-decrement-fristClass").addEventListener("click", function () {
+                handelTicketChange("fristClass", false);
+            });
+            document.getElementById("btn-increment-economy").addEventListener("click", function () {
+                handelTicketChange("Economy", true);
+            });
+            document.getElementById("btn-decrement-economy").addEventListener("click", function () {
+                handelTicketChange("Economy", false);
+            });
+            document.getElementById("bookNow-btn").addEventListener("click", function () {
+                const fristClassticketInput = document.getElementById("fristClass-ticket-count").value;
+                const EconomyticketInput = document.getElementById("Economy-ticket-count").value;
+                const totalAmount = document.getElementById("totalPrice").innerText;
+                const FlyingFrom = document.getElementById("Flying-From").value;
+                const FlyingTo = document.getElementById("Flying-To").value;
+                const DepartureDate = document.getElementById("Departure-date").value;
+                const ReturnDate = document.getElementById("Return-date").value;
+
+                alert("Dear Customer\nYou have purchased Frist class ticket : " + fristClassticketInput + "\nYou have purchased Economy ticket : " + EconomyticketInput + "\nYour total amount is : $" + totalAmount + "\n" + FlyingFrom + " To " + FlyingTo + "\nDeparture Date : " + DepartureDate + "\nReturn Date : " + ReturnDate);
+            });
+            function handelTicketChange(ticket, isIncrease) {
+                const ticketInput = document.getElementById(ticket + "-ticket-count");
+                const ticketCount = parseInt(ticketInput.value);
+                let ticketNewCount = ticketCount;
+                if (isIncrease == true) {
+                    ticketNewCount = ticketCount + 1;
+                }
+                if (isIncrease == false && ticketCount > 0) {
+                    ticketNewCount = ticketCount - 1;
+                }
+                ticketInput.value = ticketNewCount;
+                calculateTotal();
+            };
+            function calculateTotal() {
+                const fristClassInput = document.getElementById("fristClass-ticket-count");
+                const fristClassCount = parseInt(fristClassInput.value);
+                const economyInput = document.getElementById("Economy-ticket-count");
+                const economysCount = parseInt(economyInput.value);
+                const total = (fristClassCount * 150) + (economysCount * 100);
+                document.getElementById("subtotal").innerText = total;
+                const vat = total * 0.1;
+                document.getElementById("vat").innerText = vat;
+                const totalAmount = total + vat;
+                document.getElementById("totalPrice").innerText = totalAmount;
+            }
+
+        </script>
+        <!--Thank You-->
+</body>
+
+</html>
